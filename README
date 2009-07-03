@@ -1,0 +1,31 @@
+Find My iPhone uses your MobileMe username and password to scrape the Apple MobileMe website in
+order to retrieve the location of all your devices (right now they only support iPhone) and return
+them to you in JSON format.  This is not a supported API by Apple and could change at any time.
+
+In order to start the software you need Maven 2 installed. Then you can execute:
+
+mvn tomcat:run
+
+This will start a local web server.  Then you can go to the URL:
+
+http://localhost:8080/findmyiphone/
+
+A form will be displayed asking for your username and password.  Submitting them will
+execute the API just as if you called it from a programmatic client with the form:
+
+http://localhost:8080/findmyiphone/find?username=...&password=...
+
+This will return a result in JSON format that looks like:
+
+{
+   "..deviceid..":
+   {"isLocationAvailable":true,"longitude":-122,"accuracy":84.268457,"time":"12:10 PM","isOldLocationResult":true,
+   "isRecent":true,"statusString":"locate status available","status":1,"isLocateFinished":false,
+   "latitude":37,"date":"July 3, 2009","isAccurate":false},
+   ".. another device id..":
+   {"noLocation":true,"statusString":"locate status available","status":1}
+}
+
+You may need to execute the API several times over a few minutes until it finishes locating the device.
+
+Sam
