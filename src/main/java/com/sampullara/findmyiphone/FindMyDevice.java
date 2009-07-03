@@ -1,3 +1,19 @@
+/*
+   Copyright 2009, Sam Pullara
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License
+*/
+
 package com.sampullara.findmyiphone;
 
 import org.apache.http.HttpResponse;
@@ -48,7 +64,7 @@ public class FindMyDevice extends HttpServlet {
     auth.abort();
 
     // Pull the isc-secure.me.com cookie out so we can set the X-Mobileme-Isc header properly
-    String isc = readCookies(hc);
+    String isc = extractIscCode(hc);
 
     // Get access to the devices and find out their ids
     HttpPost devicemgmt = new HttpPost("https://secure.me.com/wo/WebObjects/DeviceMgmt.woa/?lang=en");
@@ -89,7 +105,7 @@ public class FindMyDevice extends HttpServlet {
     out.close();
   }
 
-  private static String readCookies(DefaultHttpClient hc) {
+  private static String extractIscCode(DefaultHttpClient hc) {
     CookieStore cookies = hc.getCookieStore();
     for (Cookie cookie : cookies.getCookies()) {
       if (cookie.getName().equals("isc-secure.me.com")) {
